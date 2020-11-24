@@ -9,7 +9,5 @@ public:
 
 	virtual std::string To_String() const = 0;
 
-	virtual std::vector<Flight> Find(std::function<bool(const Flight&)> predicate) const = 0;
-
-	virtual std::vector<Flight> FindFlightByKey(const Date& key) const = 0;
+	virtual std::vector<Flight> Find(std::string key, int indexOfMap) = 0;
 };

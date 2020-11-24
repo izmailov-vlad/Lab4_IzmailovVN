@@ -113,27 +113,21 @@ void ConsoleInteractor::ChoosePredicateAndFindFlight() const
 
 	switch (indexOfPredicate) {
 		case 1: {
+			std::string date;
+			cout << "Input date in format (DD.MM.YY): ";
+			ReadVar(date);
+
+			finded = _container->Find(date, indexOfPredicate);
+
+			break;
+			
+		}
+		case 2: {
 			std::string time;
 			cout << "Input time in format (HH:mm-HH:mm)" << endl;
 			ReadVar(time);
 
-			finded = _container->Find([time](const Flight& flight) -> bool {
-				if (flight.GetInitialTime().GetTime() == time) {
-					return true;
-				}
-				return false;
-			});
-			break;
-		}
-		case 2: {
-			string date;
-			cout << "Input date in format (DD.MM.YY): ";
-			ReadVar(date);
-			FlightBuilder builder;
-			stringstream str(date);
-			Date date_obj = builder.ParseDate(str);
-			finded = _container->FindFlightByKey(date_obj);
-
+			finded = _container->Find(time, indexOfPredicate);
 			break;
 		}
 		
@@ -143,12 +137,7 @@ void ConsoleInteractor::ChoosePredicateAndFindFlight() const
 			cout << "Input Town From: ";
 			ReadVar(town);
 
-			finded = _container->Find([town](const Flight& flight) -> bool {
-				if (flight.GetInitialTowns().GetFromTown() == town) {
-					return true;
-				}
-				return false;
-			});
+			finded = _container->Find(town, indexOfPredicate);
 			break;
 		}
 		case 4: {
@@ -156,12 +145,7 @@ void ConsoleInteractor::ChoosePredicateAndFindFlight() const
 			cout << "Input Town In: ";
 			ReadVar(town);
 
-			finded = _container->Find([town](const Flight& flight) -> bool {
-				if (flight.GetInitialTowns().GetToTown() == town) {
-					return true;
-				}
-				return false;
-				});
+			finded = _container->Find(town, indexOfPredicate);
 			break;
 		}
 		case 5: {
@@ -169,12 +153,7 @@ void ConsoleInteractor::ChoosePredicateAndFindFlight() const
 			cout << "Input flight code: ";
 			ReadVar(code);
 
-			finded = _container->Find([code](const Flight& flight)->bool {
-				if (flight.GetInitialCode().GetCode() == code) {
-					return true;
-				}
-				return false;
-			});
+			finded = _container->Find(code, indexOfPredicate);
 		}
 	}
 
@@ -211,8 +190,8 @@ void ConsoleInteractor::PrintFlightShedule() const
 
 void ConsoleInteractor::ShowPredicates() const
 {
-	cout << "Predicates: 1: Find flights by time" << endl;
-	cout << "            2: Find flights by date" << endl;
+	cout << "Predicates: 1: Find flights by date" << endl;
+	cout << "            2: Find flights by time" << endl;
 	cout << "            3: Find flights by town from" << endl;
 	cout << "            4: Find flights by town in" << endl;
 	cout << "            5: Find flights by code" << endl;

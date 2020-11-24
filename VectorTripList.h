@@ -8,9 +8,7 @@ public:
 
 	std::string To_String()const  override ;
 
-	std::vector<Flight> Find(std::function<bool(const Flight&)> predicate) const override;
-
-	std::vector<Flight> FindFlightByKey(const Date& key)const override;
+	std::vector<Flight> Find(std::string key, int indexOfMap) override;
 
 private:
 	std::vector<Flight> _container;

@@ -1,18 +1,16 @@
 ﻿  ConsoleInteractor.cpp
-  Date.cpp
   Flight.cpp
   FlightBuilder.cpp
-  FlightCode.cpp
-  FlightParser.cpp
+C:\Users\User\source\repos\Lab4_OOP_IzmailovVN_KTbo2-7\Lab4_OOP_IzmailovVN_KTbo2-7\FlightBuilder.cpp(72,11): warning C4018:  <: несоответствие типов со знаком и без знака
   Lab4_OOP_IzmailovVN_KTbo2-7.cpp
   MultiMapTripList.cpp
   SheduleBuilder.cpp
   Time.cpp
-  Towns.cpp
   VectorTripList.cpp
+C:\Users\User\source\repos\Lab4_OOP_IzmailovVN_KTbo2-7\Lab4_OOP_IzmailovVN_KTbo2-7\FlightBuilder.cpp(65,7): warning C4101:  sym: неиспользованная локальная переменная
   Создание кода
-  0 of 756 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  242 of 757 functions (32.0%) were compiled, the rest were copied from previous compilation.
+    135 functions were new in current compilation
+    107 functions had inline decision re-evaluated but remain unchanged
   Создание кода завершено
   Lab4_OOP_IzmailovVN_KTbo2-7.vcxproj -> C:\Users\User\source\repos\Lab4_OOP_IzmailovVN_KTbo2-7\Release\Lab4_OOP_IzmailovVN_KTbo2-7.exe

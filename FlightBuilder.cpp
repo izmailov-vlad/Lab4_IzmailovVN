@@ -31,37 +31,19 @@ std::vector<Flight> FlightBuilder::Build(const std::vector<std::string>& data) c
 
 Date FlightBuilder::ParseDate(std::istream& sin) const
 {
-	int date[3];
-	char dot;
+	
+	std::string date;
+	sin >> date;
+	date.erase(date.end() - 1);
 
-	for (int i = 0; i < 2; i++)
-	{
-		if (!(sin >> date[i]) || !(sin >> dot))
-		{
-			throw std::runtime_error("Parsing data from stream error");
-		}
-	}
-
-	if (!(sin >> date[2]))
-	{
-		throw std::runtime_error("Parsing data from stream error");
-	}
-
-	if (date[1] <= 0 || date[1] > 12
-		|| date[2] <= 1900 || date[2] > 3000)
-	{
-		throw std::invalid_argument("Invalid data from stream");
-	}
-
-	return Date(date[0], date[1], date[2]);
+	return Date(date);
 }
 
 
 Time FlightBuilder::ParseTime(std::istream& sin) const
 {
 	std::string time;
-	char sym;
-	sin >> sym;
+
 	if (!(sin >> time))
 	{
 		throw std::runtime_error("Parsing data from stream error");

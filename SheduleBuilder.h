@@ -18,5 +18,5 @@ inline std::unique_ptr<IContainer> SheduleBuilder::Build()
 		throw std::exception("Wrong type of container");
 	}
 
-	return std::make_unique<TContainer> (TContainer());
+	return std::make_unique<TContainer>();
 }

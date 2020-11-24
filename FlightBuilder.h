@@ -7,7 +7,6 @@ public:
 
 	std::vector<Flight> Build(const std::vector<std::string> &data) const;
 
-	//template<typename T>
 	Date ParseDate(std::istream& sin) const;
 	Time ParseTime(std::istream& sin) const;
 	Towns ParseTowns(std::istream& sin) const;
