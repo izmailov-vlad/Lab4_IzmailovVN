@@ -8,7 +8,7 @@ public:
 
 	std::string To_String()const  override ;
 
-	std::vector<Flight> Find(std::string key, int indexOfMap) override;
+	std::vector<Flight> Find(std::string& key, int indexOfMap) override;
 
 private:
 	std::vector<Flight> _container;

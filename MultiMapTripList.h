@@ -10,9 +10,9 @@ public:
 
 	std::string To_String()const  override;
 
-	std::vector<Flight> Find(std::string key, int indexOfMap) override;
+	std::vector<Flight> Find(std::string& key, int indexOfMap) override;
 
-	std::vector<Flight> SearchInMap(const std::multimap<std::string, Flight> map, std::string key);
+	std::vector<Flight> SearchInMap(const std::multimap<std::string, Flight>& map, std::string& key);
 private:
 
 	std::multimap<std::string, Flight> _indexByDate;

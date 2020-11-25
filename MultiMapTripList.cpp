@@ -2,6 +2,7 @@
 
 void MultiMapTripList::Add(const Flight& flight) {
 	_indexByDate.insert(std::make_pair(flight.GetInitialDate().GetDate(), flight));
+	_indexByTime.insert(std::make_pair(flight.GetInitialTime().GetTime(), flight));
 	_indexByTownFrom.insert(std::make_pair(flight.GetInitialTowns().GetFromTown(), flight));
 	_indexByTownIn.insert(std::make_pair(flight.GetInitialTowns().GetToTown(), flight));
 	_indexByCode.insert(std::make_pair(flight.GetInitialCode().GetCode(), flight));
@@ -18,7 +19,7 @@ std::string MultiMapTripList::To_String() const
 	return str.str();
 }
 
-std::vector<Flight> MultiMapTripList::SearchInMap(const std::multimap <std::string, Flight> map, std::string key) {
+std::vector<Flight> MultiMapTripList::SearchInMap(const std::multimap <std::string, Flight>& map, std::string& key) {
 	auto range = map.equal_range(key);
 	std::vector<Flight> finded;
 
@@ -30,7 +31,7 @@ std::vector<Flight> MultiMapTripList::SearchInMap(const std::multimap <std::stri
 	return finded;
 }
 
-std::vector<Flight> MultiMapTripList::Find(std::string key, int indexOfMap) 
+std::vector<Flight> MultiMapTripList::Find(std::string& key, int indexOfMap) 
 {
 	std::vector<Flight> finded;
 

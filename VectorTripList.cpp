@@ -14,7 +14,7 @@ std::string VectorTripList::To_String() const
 	return str.str();
 }
 
-std::vector<Flight> VectorTripList::Find(std::string key, int indexOfPredicate)
+std::vector<Flight> VectorTripList::Find(std::string& key, int indexOfPredicate)
 {
 	std::vector<Flight> finded;
 	std::function<bool(const Flight&)> predicate;

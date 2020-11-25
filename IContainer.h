@@ -9,5 +9,5 @@ public:
 
 	virtual std::string To_String() const = 0;
 
-	virtual std::vector<Flight> Find(std::string key, int indexOfMap) = 0;
+	virtual std::vector<Flight> Find(std::string& key, int indexOfMap) = 0;
 };
