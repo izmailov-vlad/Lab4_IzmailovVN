@@ -12,12 +12,12 @@ public:
 
 	std::vector<Flight> Find(std::string& key, int indexOfMap) override;
 
-	std::vector<Flight> SearchInMap(const std::multimap<std::string, Flight>& map, std::string& key);
+	std::vector<Flight> SearchInMap(const std::map<std::string, Flight>& map, std::string& key);
 private:
 
-	std::multimap<std::string, Flight> _indexByDate;
-	std::multimap<std::string, Flight> _indexByTownFrom;
-	std::multimap<std::string, Flight> _indexByTownIn;
-	std::multimap<std::string, Flight> _indexByTime;
-	std::multimap<std::string, Flight> _indexByCode;
+	std::map<std::string, Flight> _indexByDate;
+	std::map<std::string, Flight> _indexByTownFrom;
+	std::map<std::string, Flight> _indexByTownIn;
+	std::map<std::string, Flight> _indexByTime;
+	std::map<std::string, Flight> _indexByCode;
 };

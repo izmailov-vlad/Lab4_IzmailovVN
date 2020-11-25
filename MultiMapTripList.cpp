@@ -19,7 +19,7 @@ std::string MultiMapTripList::To_String() const
 	return str.str();
 }
 
-std::vector<Flight> MultiMapTripList::SearchInMap(const std::multimap <std::string, Flight>& map, std::string& key) {
+std::vector<Flight> MultiMapTripList::SearchInMap(const std::map <std::string, Flight>& map, std::string& key) {
 	auto range = map.equal_range(key);
 	std::vector<Flight> finded;
 
