@@ -14,6 +14,8 @@ public:
 		return _code;
 	}
 
+	bool operator < (const FlightCode& flight_code) const;
+
 private:
 	std::string _code;
 };

@@ -7,9 +7,8 @@ public:
 
 	std::vector<Flight> Build(const std::vector<std::string> &data) const;
 
-	Date ParseDate(std::istream& sin) const;
-	Time ParseTime(std::istream& sin) const;
-	Towns ParseTowns(std::istream& sin) const;
+	DateTime ParseDateTime(std::istream& sin) const;
+	std::vector<std::string> ParseAirports(std::istream& sin) const;
 	FlightCode ParseCode(std::istream& sin) const;
 };
 

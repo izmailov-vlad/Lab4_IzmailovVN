@@ -152,17 +152,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleInteractor.cpp" />
-    <ClCompile Include="Date.cpp" />
+    <ClCompile Include="DateTime.cpp" />
     <ClCompile Include="Flight.cpp" />
     <ClCompile Include="FlightBuilder.cpp" />
     <ClCompile Include="FlightCode.cpp" />
     <ClCompile Include="FlightParser.cpp" />
     <ClCompile Include="Lab4_OOP_IzmailovVN_KTbo2-7.cpp" />
-    <ClCompile Include="MultiMapTripList.cpp" />
-    <ClCompile Include="SheduleBuilder.cpp" />
-    <ClCompile Include="Time.cpp" />
-    <ClCompile Include="Towns.cpp" />
-    <ClCompile Include="VectorTripList.cpp" />
+    <ClCompile Include="FlightsStorage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="FlightShedule.txt" />
@@ -172,15 +168,10 @@
     <ClInclude Include="Flight.h" />
     <ClInclude Include="FlightBuilder.h" />
     <ClInclude Include="FlightCode.h" />
-    <ClInclude Include="IContainer.h" />
     <ClInclude Include="IStringConvertable.h" />
-    <ClInclude Include="MultiMapTripList.h" />
-    <ClInclude Include="SheduleBuilder.h" />
-    <ClInclude Include="VectorTripList.h" />
-    <ClInclude Include="Date.h" />
+    <ClInclude Include="FlightsStorage.h" />
+    <ClInclude Include="DateTime.h" />
     <ClInclude Include="FlightParser.h" />
-    <ClInclude Include="Time.h" />
-    <ClInclude Include="Towns.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

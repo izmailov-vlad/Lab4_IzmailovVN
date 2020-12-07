@@ -2,17 +2,17 @@
 #include <istream>
 #include <sstream>
 #include <stdexcept>
+#include <chrono>
 Flight FlightBuilder::Build(const std::string& data) const
 {
 	std::istringstream sin(data);
 
-	auto date = ParseDate(sin);
-	auto time = ParseTime(sin);
-	auto town = ParseTowns(sin);
+	auto date_time = ParseDateTime(sin);
+	auto airports = ParseAirports(sin);
 	auto code = ParseCode(sin);
 
 
-	return Flight(date, time, town, code);
+	return Flight(date_time, airports[0], airports[1], code);
 }
 
 std::vector<Flight> FlightBuilder::Build(const std::vector<std::string>& data) const
@@ -29,49 +29,51 @@ std::vector<Flight> FlightBuilder::Build(const std::vector<std::string>& data) c
 }
 
 
-Date FlightBuilder::ParseDate(std::istream& sin) const
+DateTime FlightBuilder::ParseDateTime(std::istream& sin) const
 {
-	
-	std::string date;
-	sin >> date;
-	date.erase(date.end() - 1);
+	char skipSymbol;
+	int partOfDateStructure = 0;
+	int partOfTimeStructure = 0;
+	int date[3];
+	int time[4];
 
-	return Date(date);
-}
-
-
-Time FlightBuilder::ParseTime(std::istream& sin) const
-{
-	std::string time;
-
-	if (!(sin >> time))
-	{
-		throw std::runtime_error("Parsing data from stream error");
+	for (int i = 0; i < 3; i++) {
+		sin >> date[partOfDateStructure++];
+		sin >> skipSymbol;
 	}
 
-	return Time(time);
+	for (int i = 0; i < 4; i++) {
+		sin >> skipSymbol;
+		sin >> time[partOfTimeStructure++];
+	}
+	sin >> skipSymbol;
+	
+	return DateTime(date[0],date[1],date[2], time[0], time[2], time[1], time[3]);
 }
 
 
-Towns FlightBuilder::ParseTowns(std::istream& sin) const
-{
-	std::string towns[2];
-	std::string town;
 
-	sin >> town;
+std::vector<std::string> FlightBuilder::ParseAirports(std::istream& sin) const
+{
+	
+
+	std::vector<std::string> airports(2);
+	std::string buf_airports;
+
+	sin >> buf_airports;
 
 	int i = 0;
-	while (town[i] != '>') {
-		towns[0] += town[i];
+	while (buf_airports[i] != '>') {
+		airports[0].push_back(buf_airports[i]);
 		i++;
 	}
 	i++;
-	while (town[i] != '\0') {
-		towns[1] += town[i];
+	while (buf_airports[i] != '\0') {
+		airports[1].push_back(buf_airports[i]);
 		i++;
 	}
 	
-	return Towns(towns[0], towns[1]);
+	return airports;
 }
 
 FlightCode FlightBuilder::ParseCode(std::istream& sin) const
