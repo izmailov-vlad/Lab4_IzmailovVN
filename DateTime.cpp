@@ -5,17 +5,21 @@
 std::string DateTime::To_String() const
 {
 	std::stringstream buf;
-	buf << _day << "." << _month << "." << _year << "  "<< _departure_time_hours.count() << ":" << _departure_time_minutes.count() << "-"
-		<< _arrival_time_hours.count()  << ":"  << _arrival_time_minutes.count();
+	buf << std::setfill('0') << std::setw(2) << _departure_time._departure_time_hours.count() << ":" 
+		<< std::setfill('0') << std::setw(2) << _departure_time._departure_time_minutes.count() << "-"
+		<< std::setfill('0') << std::setw(2) << _arrival_time._arrival_time_hours.count() << ":"
+		<< std::setfill('0') << std::setw(2) << _arrival_time._arrival_time_minutes.count()
+		<< "\t"
+		<< std::setfill('0') << std::setw(2) << _departure_date._departure_day << "." 
+		<< std::setfill('0') << std::setw(2) << _departure_date._departure_month << "."
+		<< std::setfill('0') << std::setw(2) << _departure_date._departure_year << "-"
+		<< std::setfill('0') << std::setw(2) << _arrival_date._arrival_day << "." 
+		<< std::setfill('0') << std::setw(2) << _arrival_date._arrival_month << "."
+		<< std::setfill('0') << std::setw(4) << _arrival_date._arrival_year;
+
 	return buf.str();
 }
-//bool Date::operator==(const Date& date) const
-//{
-//	if (_day == date._day && _month == date._month && _year == date._year) {
-//		return true;
-//	}
-//	return false;
-//}
+
 
 bool DateTime::operator<(const DateTime& date) const
 {
@@ -31,15 +35,15 @@ bool DateTime::operator<(const DateTime& date) const
 
 int DateTime::GetDaysCount() const
 {
-	int res = _day;
+	int res = _arrival_date._arrival_day;
 
-	for (int i = 1; i < _month; i++)
+	for (int i = 1; i < _arrival_date._arrival_month; i++)
 	{
-		res += GetDaysCountInMonth(_month, _year);
+		res += GetDaysCountInMonth(_arrival_date._arrival_month, _arrival_date._arrival_year);
 	}
 
-	int leapYearsCount = _year / 4;
-	int yearsCount = _year - leapYearsCount;
+	int leapYearsCount = _arrival_date._arrival_year / 4;
+	int yearsCount = _arrival_date._arrival_year - leapYearsCount;
 
 	res += leapYearsCount * 366 + yearsCount * 365;
 

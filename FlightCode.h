@@ -4,13 +4,13 @@
 class FlightCode :public IStringConvertable {
 public:
 	FlightCode() = default;
-	FlightCode(std::string code) {
+	FlightCode(const std::string& code) {
 		_code = code;
 	}
 
 	std::string To_String() const override;
 
-	std::string GetCode() {
+	const std::string& GetCode() {
 		return _code;
 	}
 

@@ -13,7 +13,7 @@ void ConsoleInteractor::ReadVar(T& var) const
 	istringstream sin(input);
 
 	char c;
-
+	
 	if (!(sin >> var) || (sin >> c))
 	{
 		throw std::runtime_error("Input error. Failed to enter a variable");
@@ -28,9 +28,12 @@ void ConsoleInteractor::Start()
 	
 	while (true) {
 		try {
-				command = ReadCommand();
-				switch (command) {
-				case 0: return; break;
+			command = ReadCommand();
+
+			switch (command) {
+
+				case 0: return;
+
 				case BUILD_FLIGHT_STORE: {
 					ReadFileAndBuildFlights();
 					break;
@@ -53,7 +56,7 @@ void ConsoleInteractor::Start()
 					break;
 				}
 				default: {
-					cout << "Wrong command, Try again";
+					throw std::runtime_error(R"(Wrong command, try again)");
 					break;
 				}
 			}
@@ -64,8 +67,6 @@ void ConsoleInteractor::Start()
 	}
 
 }
-
-
 
 int ConsoleInteractor::ReadCommand() const
 {
@@ -78,62 +79,41 @@ int ConsoleInteractor::ReadCommand() const
 
 void ConsoleInteractor::FindFlights()
 {
+	if (_flightsStorage.IsEmpty()) {
+		throw std::runtime_error("\nInclude file with flights first\n");
+	}
+	
 	FindCommands();
 	int indexOfPredicate;
 	std::vector<Flight*> finded;
-	stringstream buf;
 
+	cout << "\nInput index of command: ";
 	ReadVar(indexOfPredicate);
-
+	
 	switch (indexOfPredicate) {
 		case FIND_BY_DATE_TIME: {
-
-			std::string date_time;
-			DateTime date_time_obj;
-			FlightBuilder builder;
-			cout << "Input Date and Time YY.MM.DD:(HH:mm-HH:mm)" << endl;
-
-			ReadVar(date_time);
-			buf << date_time;
-
-			date_time_obj = builder.ParseDateTime(buf);
-
-			finded = _flightsStorage.FindFlightsByDateTime(date_time_obj);
-
+			finded = FindFlightByDateTime();
 			break; 
 		}
+		case FIND_BY_AIRPORTS_AND_DATE: {
+			finded = FindFlightByAirportsAndDate();
+			break;
+		}
+		
 		case FIND_BY_ARRIVAL: {
-			cout << "Input arrival airport: ";
-			std::string arrival_airport;
-			ReadVar(arrival_airport);
-
-			finded = _flightsStorage.FindFlightByArrivalAirports(arrival_airport);
+			finded = FindFlightByArrivalAirport();
 			break;
 		}
 		case FIND_BY_DEPARTURE: {
-			cout << "Input departure airport: ";
-
-			std::string departure_airport;
-			ReadVar(departure_airport);
-
-			finded = _flightsStorage.FindFlightByDepartureAirports(departure_airport);
+			finded = FindFlightByDepartureAirport();
 			break;
 		}
 		case FIND_BY_CODE: {
-			cout << "Input flight code: ";
-
-			FlightCode flight_code_obj;
-			FlightBuilder builder;
-			stringstream buf;
-			std::string flight_code;
-
-			ReadVar(flight_code);
-			buf << flight_code;
-
-			flight_code_obj = builder.ParseCode(buf);
-
-			finded.push_back(_flightsStorage.FindFlightByCode(flight_code_obj));
+			finded.push_back(FindFlightByFlightCode());
 			break; 
+		}
+		default: {
+			std::runtime_error(R"(Wrong command, try again)");
 		}
 	}
 
@@ -145,6 +125,11 @@ void ConsoleInteractor::FindFlights()
 
 void ConsoleInteractor::UpdateStorage()
 {
+
+	if (_flightsStorage.IsEmpty()) {
+		throw std::runtime_error("\nInclude file with flights first\n");
+	}
+
 	UpdateCommands();
 	int indexOfPredicate;
 	std::vector<Flight*> finded;
@@ -153,19 +138,23 @@ void ConsoleInteractor::UpdateStorage()
 
 	switch (indexOfPredicate) {
 
-
 		case UPDATE_DATE_TIME: {
 			UpdateDateTime();
 			break;
 		}
 
-		case UPDATE_ARRIVAL_AIRPORT: {
-			UpdateArrivalAirport();
+		case UPDATE_DATE: {
+			UpdateDate();
 			break;
 		}
-		case UPDATE_DEPARTURE_AIRPORT: {
-			UpdateDepartureAirport();
+
+		case UPDATE_AIRPORT: {
+			UpdateAirport();
 			break;
+		}
+		
+		default: {
+			std::runtime_error(R"(Wrong command, try again)");
 		}
 		
 	}
@@ -187,43 +176,50 @@ void ConsoleInteractor::ReadFileAndBuildFlights()
 		_flightsStorage.Add(flight);
 	}
 
-	cout << "success" << endl;
+	cout << "\nSuccess\n" << endl;
 
 }
 
-void ConsoleInteractor::PrintFlightShedule() const
+void ConsoleInteractor::PrintFlightShedule()
 {
-	cout << _flightsStorage.To_String() << endl;
+	if (!_flightsStorage.IsEmpty()) {
+		cout << _flightsStorage.To_String() << endl;
+	}
+	else {
+		throw std::runtime_error("List is empty");
+	}
 }
 
 void ConsoleInteractor::FindCommands() const
 {
-	cout << "Commands For Find: 1: Find flights by date and time" << endl;
-	cout << "					2: Find flights by arrival airport" << endl;
-	cout << "					3: Find flights by departure airport" << endl;
-	cout << "					4: Find flights by code" << endl;
+	cout << "\n";
+	for (unsigned long i = 0; i <  _find_commands.size(); i++) {
+		cout << "#" << i+1 << "\t" << _find_commands[i] << endl;
+	}
 
 }
+
 void ConsoleInteractor::UpdateCommands() const
 {
-	cout << "Commands For Update: 1: Update flights by date and time" << endl;
-	cout << "					  2: Update flights by  arrival airport" << endl;
-	cout << "					  3: Update flights by departure airport" << endl;
+	cout << "\n";
+	for (unsigned long i = 0; i < _update_commands.size(); i++) {
+		cout<< "#" << i+1 << "\t" << _update_commands[i] << endl;
+	}
 }
 
 void ConsoleInteractor::PrintCommands() const
 {
 	system("cls");
-	cout << "1. Read file" << endl;
-	cout << "2. Find Flights" << endl;
-	cout << "3. Update Flights" << endl;
-	cout << "4. Print Storage" << endl;
-	cout << "5. Print Menu" << endl;
+	cout << "\n";
+	for (unsigned long i = 0; i < _info_menu.size(); i++) {
+		cout << "#" << i+1 << "\t" << _info_menu[i] << endl;
+	}
 
 }
 
 void ConsoleInteractor::UpdateDateTime()
 {
+	stringstream buf;
 	FlightBuilder builder;
 	std::string date_time;
 	std::string code;
@@ -231,47 +227,50 @@ void ConsoleInteractor::UpdateDateTime()
 	cout << "Input FlightCode: ";
 	ReadVar(code);
 
-	cout << "Input date and time in format (YY.MM.DD): (HH:mm-HH:mm)" << endl;
+	cout << "Input date and time in format HH:mm-HH:mm YY.MM.DD-YY.MM.DD" << endl;
 	ReadVar(date_time);
 
-	stringstream buf;
 	buf << date_time;
 
 	DateTime date_time_obj = builder.ParseDateTime(buf);
 
-	buf.clear();
 	buf << code;
 	FlightCode flight_code = builder.ParseCode(buf);
 
 	_flightsStorage.UpdateDateTime(flight_code, date_time_obj);
 }
 
-void ConsoleInteractor::UpdateArrivalAirport()
+void ConsoleInteractor::UpdateDate()
 {
-	std::string arrival_aiport;
-	std::string flight_code;
 	stringstream buf;
+	std::string date;
+	std::string code;
+	char flag;
 
-	FlightBuilder builder;
-	FlightCode flight_code_obj;
-	cout << "Input flight code: ";
-	ReadVar(flight_code);
+	char skip;
+	std::vector<int> new_date(3);
 
+	cout << "Input FlightCode: ";
+	ReadVar(code);
 
-	buf << flight_code;
-	flight_code_obj = builder.ParseCode(buf);
+	cout << "Input new date: ";
+	ReadVar(date);
 
-	cout << "Input arrival aiport: ";
-	ReadVar(arrival_aiport);
+	cout << "Input flag: (D - Deparutre date, A - Arrival date)";
+	ReadVar(flag);
 
-	_flightsStorage.UpdateArrivalAirport(flight_code_obj, arrival_aiport);
+	buf << date;
+	buf >> new_date[0] >> skip >> new_date[1] >> skip >> new_date[2];
+
+	_flightsStorage.UpdateDate(code, new_date, flag);
 }
 
-void ConsoleInteractor::UpdateDepartureAirport()
+void ConsoleInteractor::UpdateAirport()
 {
-	std::string departure_airport;
+	std::string airport;
 	std::string flight_code;
 	stringstream buf;
+	char flag;
 
 	FlightBuilder builder;
 	FlightCode flight_code_obj;
@@ -282,10 +281,109 @@ void ConsoleInteractor::UpdateDepartureAirport()
 	buf << flight_code;
 	flight_code_obj = builder.ParseCode(buf);
 
-	cout << "Input arrival aiport: ";
+	cout << "Input aiport: ";
+	ReadVar(airport);
+
+	cout << "Input flag (D - Departure, A - Arrival) : ";
+	ReadVar(flag);
+
+	_flightsStorage.UpdateAirport(flight_code_obj, airport, flag);
+}
+
+std::vector<Flight*> ConsoleInteractor::FindFlightByDateTime()
+{
+	std::string time;
+	std::string date;
+	stringstream buf;
+	DateTime date_time_obj;
+	FlightBuilder builder;
+	cout << "Input Date and Time " << endl;
+
+	ReadVar(time);
+	ReadVar(date);
+	buf << time << " " << date;
+
+	date_time_obj = builder.ParseDateTime(buf);
+
+	return _flightsStorage.FindFlightsByDateTime(date_time_obj);
+}
+
+std::vector<Flight*> ConsoleInteractor::FindFlightByAirportsAndDate()
+{
+	stringstream buf;
+	FlightBuilder builder;
+	std::string arrival_airport;
+	std::string departure_airport;
+	std::string date;
+	char flag;
+
+
+	cout << "\nDeparture town: ";
+	ReadVar(departure_airport);
+	cout << "\n";
+
+	cout << "Arrival town: ";
+	ReadVar(arrival_airport);
+	cout << "\n";
+
+	cout << "Date: ";
+	ReadVar(date);
+	cout << "\n";
+
+	cout << "Input flag (A - Airports and arrival date, D - Airports and departure date) : ";
+	ReadVar(flag);
+
+	buf << date;
+
+	DateTime date_time_obj = builder.ParseDate(buf);
+	switch (flag) {
+		case'A': {
+			AirportsAndArrivalDate airports_and_date{ date_time_obj.GetArrivalDate(),date_time_obj.GetDaysCount(), arrival_airport, departure_airport };
+			return _flightsStorage.FindFlightsByAirportAndDate(airports_and_date);
+			break;
+		}
+		case 'D': {
+			AirportsAndDepartureDate airports_and_date{ date_time_obj.GetDepartureDate(),date_time_obj.GetDaysCount(), arrival_airport, departure_airport };
+			return _flightsStorage.FindFlightsByAirportAndDate(airports_and_date);
+			break;
+		}
+	}
+}
+
+std::vector<Flight*> ConsoleInteractor::FindFlightByArrivalAirport()
+{
+	cout << "Input arrival airport: ";
+	std::string arrival_airport;
+	ReadVar(arrival_airport);
+
+	return _flightsStorage.FindFlightByArrivalAirports(arrival_airport);
+}
+
+std::vector<Flight*> ConsoleInteractor::FindFlightByDepartureAirport()
+{
+	cout << "Input departure airport: ";
+
+	std::string departure_airport;
 	ReadVar(departure_airport);
 
-	_flightsStorage.UpdateArrivalAirport(flight_code_obj, departure_airport);
+	return _flightsStorage.FindFlightByDepartureAirports(departure_airport);
+}
+
+Flight* ConsoleInteractor::FindFlightByFlightCode()
+{
+	cout << "Input flight code: ";
+
+	FlightCode flight_code_obj;
+	FlightBuilder builder;
+	stringstream buf;
+	std::string flight_code;
+
+	ReadVar(flight_code);
+	buf << flight_code;
+
+	flight_code_obj = builder.ParseCode(buf);
+
+	return _flightsStorage.FindFlightByCode(flight_code_obj);
 }
 
 void ConsoleInteractor::ToUniqueFormat(std::string& typeForFormat) const

@@ -8,9 +8,9 @@ class Flight : public IStringConvertable {
 public:
 	Flight() = default;
 	Flight(const DateTime& date_time, const std::string& arrival_airport, const std::string& departure_airport, const FlightCode& code) {
-		_date_time = date_time;
-		_arrival_airport = arrival_airport;
 		_departure_airport = departure_airport;
+		_arrival_airport = arrival_airport;
+		_date_time = date_time;
 		_code = code;
 	}
 
@@ -64,12 +64,21 @@ public:
 
 	void SetFlightCode(const FlightCode& new_flight_code) {
 		_code = new_flight_code;
+	}
 
+	void SetDate(int arrival_day, int arrival_month, int arrival_year) {
+		_date_time.SetArrivalDate(
+			arrival_day, arrival_month, arrival_year
+		);
 	}
 
 private:
+
 	DateTime _date_time;
+	
 	FlightCode _code;
+	
 	std::string _arrival_airport;
+	
 	std::string _departure_airport;
 };

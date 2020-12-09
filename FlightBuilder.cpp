@@ -11,8 +11,7 @@ Flight FlightBuilder::Build(const std::string& data) const
 	auto airports = ParseAirports(sin);
 	auto code = ParseCode(sin);
 
-
-	return Flight(date_time, airports[0], airports[1], code);
+	return Flight(date_time, airports[1], airports[0], code);
 }
 
 std::vector<Flight> FlightBuilder::Build(const std::vector<std::string>& data) const
@@ -28,29 +27,43 @@ std::vector<Flight> FlightBuilder::Build(const std::vector<std::string>& data) c
 	return flights;
 }
 
-
 DateTime FlightBuilder::ParseDateTime(std::istream& sin) const
 {
 	char skipSymbol;
 	int partOfDateStructure = 0;
 	int partOfTimeStructure = 0;
-	int date[3];
+	int date[6];
 	int time[4];
 
 	for (int i = 0; i < 3; i++) {
+		sin >> time[partOfTimeStructure++];
+		sin >> skipSymbol;
+	}
+	sin >> time[partOfTimeStructure++];
+
+	for (int i = 0; i < 5; i++) {
 		sin >> date[partOfDateStructure++];
 		sin >> skipSymbol;
 	}
-
-	for (int i = 0; i < 4; i++) {
-		sin >> skipSymbol;
-		sin >> time[partOfTimeStructure++];
-	}
-	sin >> skipSymbol;
+	sin >> date[partOfDateStructure++];
 	
-	return DateTime(date[0],date[1],date[2], time[0], time[2], time[1], time[3]);
+	return DateTime(time[0], time[1], time[2], time[3], date[0], date[1], date[2], date[3], date[4],
+					date[5]);
 }
 
+DateTime FlightBuilder::ParseDate(std::istream& sin) const
+{
+	int date[3];
+	int partOfDateStructure = 0;
+	char skipSymbol;
+
+	for (int i = 0; i < 2; i++) {
+		sin >> date[partOfDateStructure++];
+		sin >> skipSymbol;
+	}
+	sin >> date[partOfDateStructure++];
+	return DateTime(date[0], date[1], date[2]);
+}
 
 
 std::vector<std::string> FlightBuilder::ParseAirports(std::istream& sin) const

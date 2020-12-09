@@ -3,16 +3,36 @@
 #include <memory>
 class ConsoleInteractor {
 public:
+
 	void Start();
 
 private:
 
 	FlightsStorage _flightsStorage;
 
-	//bool Init();
-	int ReadCommand() const;
+	std::vector<std::string> _find_commands = {
+		"Find flights by date and time",
+		"Find flights by airports and date",
+		"Find flights by arrival airport",
+		"Find flights by departure airport",
+		"Find flights by code"
+	};
 
-	void ChoosePredicateAndFindFlight();
+	std::vector<std::string> _update_commands = { 
+		"Update	date and time of flight",
+		"Update date of flight",
+		"Update airport of flight",
+	};
+
+	std::vector<std::string> _info_menu = { 
+		"Read file ",
+		"Find Flights",
+		"Update Flights",
+		"Print Storage",
+		"Print Menu" 
+	};
+
+	int ReadCommand() const;
 
 	void FindFlights();
 
@@ -20,17 +40,25 @@ private:
 
 	void ReadFileAndBuildFlights();
 
-	void PrintFlightShedule() const;
-
-	void ShowPredicates() const;
+	void PrintFlightShedule();
 
 	void PrintCommands() const;
 
 	void UpdateDateTime();
 
-	void UpdateArrivalAirport();
+	void UpdateDate();
 
-	void UpdateDepartureAirport();
+	void UpdateAirport();
+
+	std::vector<Flight*> FindFlightByDateTime();
+
+	std::vector<Flight*> FindFlightByAirportsAndDate();
+
+	std::vector<Flight*> FindFlightByArrivalAirport();
+
+	std::vector<Flight*> FindFlightByDepartureAirport();
+
+	Flight* FindFlightByFlightCode();
 
 	void ToUniqueFormat(std::string& typeForFormat) const;
 
@@ -43,17 +71,19 @@ private:
 
 	enum {
 		UPDATE_DATE_TIME = 1,
-		UPDATE_ARRIVAL_AIRPORT,
-		UPDATE_DEPARTURE_AIRPORT,
+		UPDATE_DATE,
+		UPDATE_AIRPORT,
 		DELETE_FLIGHT
 	};
 
 	enum {
 		FIND_BY_DATE_TIME = 1,
+		FIND_BY_AIRPORTS_AND_DATE,
 		FIND_BY_ARRIVAL,
 		FIND_BY_DEPARTURE,
 		FIND_BY_CODE
 	};
+
 	enum {
 		BUILD_FLIGHT_STORE = 1,
 		FIND_FLIGHTS,

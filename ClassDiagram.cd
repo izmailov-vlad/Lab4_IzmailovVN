@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DateTime">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQgZAAABIAACBAAQgAAAgCAAAAAAAAQAAAEgCCAAAAA=</HashCode>
+      <FileName>DateTime.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_arrival_date" />
+      <Field Name="_departure_date" />
+      <Field Name="_arrival_time" />
+      <Field Name="_departure_time" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Flight">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAJAABAAAAAAAAIAAAAABCBAIAAEAAABAAAgEAGggAA=</HashCode>
+      <FileName>Flight.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlightBuilder">
+    <Position X="5.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEABAAAAAABAEAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FlightBuilder.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlightCode">
+    <Position X="7.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAACAAAAAAAAAAAAAgAACgAAA=</HashCode>
+      <FileName>FlightCode.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlightParser">
+    <Position X="4" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FlightParser.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IStringConvertable">
+    <Position X="10.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IStringConvertable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsoleInteractor">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="ConsoleInteractor::__unnamed_enum_0002_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ConsoleInteractor.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="ConsoleInteractor::__unnamed_enum_0002_2" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ConsoleInteractor.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="ConsoleInteractor::__unnamed_enum_0002_3" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ConsoleInteractor.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>gCAAABAAASABAAAQgIACAAAAAEAAgiVAAAAAQEQAoAI=</HashCode>
+      <FileName>ConsoleInteractor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FlightsStorage">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAJAAQAAIQEAAUAREAAIACAAACAAAiSAAAAAAAAAAAA=</HashCode>
+      <FileName>FlightsStorage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="ArrivalDate">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>DateTime.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DepartureDate">
+    <Position X="6.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAIAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>DateTime.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ArrivalTime">
+    <Position X="5.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIAAAAAAAAAAAA=</HashCode>
+      <FileName>DateTime.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DepartureTime">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DateTime.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="AirportsAndDepartureDate">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAGAAAA=</HashCode>
+      <FileName>FlightsStorage.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="AirportsAndArrivalDate">
+    <Position X="2.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAGAAAA=</HashCode>
+      <FileName>FlightsStorage.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
