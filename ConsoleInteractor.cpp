@@ -221,19 +221,24 @@ void ConsoleInteractor::UpdateDateTime()
 {
 	stringstream buf;
 	FlightBuilder builder;
-	std::string date_time;
+	std::string date;
+	std::string time;
 	std::string code;
 
 	cout << "Input FlightCode: ";
 	ReadVar(code);
 
-	cout << "Input date and time in format HH:mm-HH:mm YY.MM.DD-YY.MM.DD" << endl;
-	ReadVar(date_time);
+	cout << "Input time in format HH:mm-HH:mm: " << endl;
+	ReadVar(time);
 
-	buf << date_time;
+	cout << "Input date format YY.MM.DD-YY.MM.DD: " << endl;
+	ReadVar(date);
+
+	buf << time + " " + date;
 
 	DateTime date_time_obj = builder.ParseDateTime(buf);
-
+	
+	buf.clear();
 	buf << code;
 	FlightCode flight_code = builder.ParseCode(buf);
 
